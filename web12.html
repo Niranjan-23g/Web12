@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Registration Application</title>
+    <!-- Tailwind CSS for Layout -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <style>
+        /* Custom CSS to demonstrate styling skills beyond framework */
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        .form-input {
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+        }
+        .form-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+            outline: none;
+        }
+        .btn-submit {
+            background: linear-gradient(90deg, #4f46e5 0%, #3b82f6 100%);
+            transition: transform 0.1s ease, box-shadow 0.3s ease;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .btn-submit:active {
+            transform: translateY(1px);
+        }
+        
+        /* Success Card Styling */
+        .result-card {
+            border-left: 5px solid #10b981;
+            animation: slideIn 0.5s ease-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4">
+
+    <div class="container mx-auto max-w-2xl">
+        
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">SGBIT Belgaum</h1>
+            <p class="text-gray-600">Student Registration Form 2025</p>
+        </div>
+
+        <!-- Registration Form Section -->
+        <div id="registrationSection" class="glass-panel p-8">
+            <form id="appForm" action="submit.php" method="POST">
+                <div class="space-y-6">
+                    
+                    <!-- Personal Details -->
+                    <h2 class="text-xl font-semibold text-gray-700 border-b pb-2">Personal Details</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                            <input type="text" name="fullName" id="fullName" required class="form-input w-full rounded-lg p-3" placeholder="Raj Kumar">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                            <input type="date" name="dob" id="dob" required class="form-input w-full rounded-lg p-3">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                            <input type="email" name="email" id="email" required class="form-input w-full rounded-lg p-3" placeholder="rajkumar@example.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                            <input type="tel" name="phone" id="phone" required class="form-input w-full rounded-lg p-3" placeholder="(+91) 98765 43210">
+                        </div>
+                    </div>
+
+                    <!-- Course Selection -->
+                    <h2 class="text-xl font-semibold text-gray-700 border-b pb-2 pt-4">Application Details</h2>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Select Course</label>
+                        <select name="course" id="course" class="form-input w-full rounded-lg p-3 bg-white">
+                            <option value="Web Development">Full Stack Web Development</option>
+                            <option value="Data Science">Data Science & AI</option>
+                            <option value="Cyber Security">Cyber Security Fundamentals</option>
+                            <option value="Cloud Computing">Cloud Computing (AWS/Azure)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                        <textarea name="address" id="address" rows="3" class="form-input w-full rounded-lg p-3" placeholder="Street, City, Zip Code"></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="pt-4">
+                        <button type="submit" class="btn-submit w-full text-white font-bold py-4 rounded-lg text-lg uppercase tracking-wide">
+                            Submit Application
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Result Section (Hidden by default) -->
+        <div id="resultSection" class="hidden">
+            <div class="glass-panel p-8 result-card bg-white">
+                <div class="text-center mb-6">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800">Application Submitted Successfully!</h2>
+                    <p class="text-gray-500">Here is a summary of your registration details.</p>
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                    <div class="grid grid-cols-1 gap-4 text-sm">
+                        <div class="flex justify-between border-b border-gray-200 pb-2">
+                            <span class="font-medium text-gray-500">Applicant Name</span>
+                            <span class="font-bold text-gray-800" id="resName"></span>
+                        </div>
+                        <div class="flex justify-between border-b border-gray-200 pb-2">
+                            <span class="font-medium text-gray-500">Email</span>
+                            <span class="font-bold text-gray-800" id="resEmail"></span>
+                        </div>
+                        <div class="flex justify-between border-b border-gray-200 pb-2">
+                            <span class="font-medium text-gray-500">Phone</span>
+                            <span class="font-bold text-gray-800" id="resPhone"></span>
+                        </div>
+                        <div class="flex justify-between border-b border-gray-200 pb-2">
+                            <span class="font-medium text-gray-500">Date of Birth</span>
+                            <span class="font-bold text-gray-800" id="resDob"></span>
+                        </div>
+                        <div class="flex justify-between border-b border-gray-200 pb-2">
+                            <span class="font-medium text-gray-500">Selected Course</span>
+                            <span class="font-bold text-blue-600" id="resCourse"></span>
+                        </div>
+                        <div class="flex justify-between pt-2">
+                            <span class="font-medium text-gray-500">Address</span>
+                            <span class="font-bold text-gray-800 text-right w-1/2" id="resAddress"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 text-center">
+                    <button onclick="window.print()" class="text-blue-600 hover:text-blue-800 font-medium underline">Print this page</button>
+                    <span class="mx-2 text-gray-300">|</span>
+                    <button id="btnBack" class="text-gray-600 hover:text-gray-800 font-medium">Submit Another</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Handle Form Submission
+            $('#appForm').on('submit', function(e) {
+                // 1. Prevent default PHP submission for this demo
+                // (In a real PHP environment, you might remove this line to let PHP handle it,
+                // or keep it and use AJAX to send data to PHP).
+                e.preventDefault();
+
+                // 2. Validate (Simple check)
+                var isValid = true;
+                $(this).find('input[required]').each(function() {
+                    if ($(this).val() === '') isValid = false;
+                });
+
+                if (isValid) {
+                    // 3. Capture Data using jQuery
+                    var name = $('#fullName').val();
+                    var email = $('#email').val();
+                    var phone = $('#phone').val();
+                    var dob = $('#dob').val();
+                    var course = $('#course').val();
+                    var address = $('#address').val();
+
+                    // 4. Inject Data into Result View
+                    $('#resName').text(name);
+                    $('#resEmail').text(email);
+                    $('#resPhone').text(phone);
+                    $('#resDob').text(dob);
+                    $('#resCourse').text(course);
+                    $('#resAddress').text(address);
+
+                    // 5. Toggle Visibility (Hide Form, Show Result)
+                    $('#registrationSection').fadeOut(300, function() {
+                        $('#resultSection').removeClass('hidden').fadeIn(300);
+                    });
+                }
+            });
+
+            // Handle Back Button
+            $('#btnBack').on('click', function() {
+                $('#resultSection').fadeOut(300, function() {
+                    $('#registrationSection').fadeIn(300);
+                    $('#appForm')[0].reset();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
